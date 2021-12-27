@@ -20,9 +20,54 @@ app.get("/", function (req, res) {
 
 
 // your first API endpoint... 
-app.get("/api/hello", function (req, res) {
-  res.json({greeting: 'hello API'});
+
+var result = {}
+
+app.get("/api/:date", function (req, res) {
+  let date = req.params.date
+  if(date.includes('-')){
+    let d = new Date(date)
+    let a = d.getTime()
+    let b = d.toUTCString()
+    result['unix'] = a
+    result['utc'] = b
+    if(!result['unix'] || !result['utc']){
+      res.json({error:"Invalid Date"})
+    }
+    else{
+      res.json(result);
+    }
+  }
+ 
+  else{   
+    let timestamp = parseInt(date)
+    let c = new Date(timestamp).getTime()
+    let e = new Date(timestamp).toUTCString()
+    result['unix'] = c
+    result['utc'] = e
+    if(!result['unix'] || !result['utc']){
+      res.json({error:"Invalid Date"})
+    }
+    else{
+      res.json(result);
+    }
+    
+  }
+  
+
 });
+
+
+
+app.get("/api", function (req, res) {
+  let mili = new Date().getTime()
+  let today = new Date().toUTCString()
+  res.json({unix:mili,utc:today})
+
+});
+
+
+
 
 
 
