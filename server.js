@@ -39,19 +39,35 @@ app.get("/api/:date", function (req, res) {
     }
   }
  
-  else{   
+  else{ 
     let timestamp = parseInt(date)
-    let c = new Date(timestamp).getTime()
-    let e = new Date(timestamp).toUTCString()
-    result['unix'] = c
-    result['utc'] = e
-    if(!result['unix'] || !result['utc']){
-      res.json({error:"Invalid Date"})
+    console.log(timestamp.length)
+    if(timestamp < 33){
+      let c = new Date(date).getTime()
+      let e = new Date(date).toUTCString()
+      result['unix'] = c
+      result['utc'] = e
+      if(!result['unix'] || !result['utc']){
+        res.json({error:"Invalid Date"})
+      }
+      else{
+        res.json(result);
+      }
     }
     else{
-      res.json(result);
+      let c = new Date(timestamp).getTime()
+      let e = new Date(timestamp).toUTCString()
+      result['unix'] = c
+      result['utc'] = e
+      if(!result['unix'] || !result['utc']){
+        res.json({error:"Invalid Date"})
+      }
+      else{
+        res.json(result);
+      }
+      
     }
-    
+ 
   }
   
 
